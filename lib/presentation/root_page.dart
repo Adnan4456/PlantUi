@@ -1,6 +1,5 @@
 
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:plant_ui/constants.dart';
@@ -12,7 +11,7 @@ import 'package:plant_ui/presentation/pages/profile_page.dart';
 
 class RootPage extends StatefulWidget{
 
-  RootPage({super.key});
+  const RootPage({super.key});
 
   @override
    createState()=> _RootPage();
@@ -20,7 +19,7 @@ class RootPage extends StatefulWidget{
 
 class _RootPage extends State<RootPage>{
 
-  int _bottomNavIndex = 0;
+  final int _bottomNavIndex = 0;
 
   //list of pages
   List<Widget> pages = const [
