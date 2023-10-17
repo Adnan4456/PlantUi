@@ -1,6 +1,5 @@
 
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CartPage extends StatefulWidget{
@@ -15,7 +14,7 @@ class _CartPage extends State<CartPage>{
   Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(
-      title: Text("Cart "),
+      title: const Text("Cart "),
     ),
   );
   }
