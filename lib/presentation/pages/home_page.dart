@@ -222,7 +222,7 @@ class _HomePage extends State<HomePage>{
                   itemBuilder: (BuildContext context , int index){
                   return GestureDetector(
                     onTap: (){
-                      Navigator.push(context,PageTransition(child: DetailPage(), type: PageTransitionType.bottomToTop));
+                      Navigator.push(context,PageTransition(child: const DetailPage(), type: PageTransitionType.bottomToTop));
                     },
                     child: Container(
                       height: 80.0,
