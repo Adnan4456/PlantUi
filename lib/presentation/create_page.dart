@@ -10,8 +10,8 @@ class CreatePage extends StatelessWidget{
   final String description;
 
   const CreatePage({
-    Key? key  , required this.image ,required this.title ,required this.description
-  }): super(key: key);
+    super.key  , required this.image ,required this.title ,required this.description
+  });
 
   @override
   Widget build(BuildContext context) {
