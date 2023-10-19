@@ -32,9 +32,9 @@ class _HomePage extends State<HomePage>{
     ];
 
     //Toggle Favorite button
-    bool toggleIsFavorated(bool isFavorited) {
-      return !isFavorited;
-    }
+    // bool toggleIsFavorated(bool isFavorited) {
+    //   return !isFavorited;
+    // }
 
     return Scaffold(
       body: SingleChildScrollView(
