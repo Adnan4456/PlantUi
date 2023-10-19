@@ -32,9 +32,9 @@ class _HomePage extends State<HomePage>{
     ];
 
     //Toggle Favorite button
-    // bool toggleIsFavorated(bool isFavorited) {
-    //   return !isFavorited;
-    // }
+    bool toggleIsFavorated(bool isFavorited) {
+      return !isFavorited;
+    }
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -131,10 +131,14 @@ class _HomePage extends State<HomePage>{
                                 borderRadius: BorderRadius.circular(50),
                               ),
                               child: IconButton(
-                                onPressed: null,
+                                onPressed: (){
+                                  setState(() {
+                                    bool isFavorited = toggleIsFavorated(plantList[index].isFavorated);
+                                    plantList[index].isFavorated = isFavorited;
+                                  });
+                                },
                                 icon: Icon(plantList[index].isFavorated == true ?
-                                Icons.favorite : Icons.favorite_border),
-                                color: Constants.primaryColor,
+                                Icons.favorite : Icons.favorite_border , color: Constants.primaryColor),
                                 iconSize: 30,
                               ),
                             )
