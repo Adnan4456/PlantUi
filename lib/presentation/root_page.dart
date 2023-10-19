@@ -1,5 +1,6 @@
 
 
+import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:plant_ui/constants.dart';
@@ -19,7 +20,7 @@ class RootPage extends StatefulWidget{
 
 class _RootPage extends State<RootPage>{
 
-  final int _bottomNavIndex = 0;
+  int _bottomNavIndex = 0;
 
   //list of pages
   List<Widget> pages = const [
@@ -53,6 +54,21 @@ class _RootPage extends State<RootPage>{
       appBar:_buildAppBar(),
       body: _buildBody(),
       floatingActionButton: _actionButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: AnimatedBottomNavigationBar(
+        splashColor: Constants.primaryColor,
+        activeColor:  Constants.primaryColor,
+        inactiveColor: Colors.black.withOpacity(.5),
+        icons: iconList,
+        activeIndex: _bottomNavIndex,
+        gapLocation: GapLocation.center,
+        notchSmoothness: NotchSmoothness.smoothEdge,
+        onTap: (index){
+          setState(() {
+            _bottomNavIndex = index;
+          });
+        },
+      ),
     );
   }
 
@@ -85,10 +101,11 @@ class _RootPage extends State<RootPage>{
 
   FloatingActionButton _actionButton(){
     return FloatingActionButton(
+      backgroundColor: Constants.primaryColor,
       onPressed: () {
       Navigator.push(context, PageTransition(child: const LoginScreen() , type: PageTransitionType.bottomToTop));
       },
-      child: Image.asset("assets/images/code-scan.png" , height: 30.0,),
+      child: Image.asset("assets/images/code-scan-two.png" , height: 30.0,),
     );
   }
 }

@@ -1,6 +1,6 @@
 
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class FavoritePage extends StatefulWidget{
 
@@ -11,10 +11,14 @@ class FavoritePage extends StatefulWidget{
 
 }
 class _FavoritePage extends State<FavoritePage>{
+
   @override
   Widget build(BuildContext context) {
-
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Center(child: Text("Favorite ")),
+      ),
+    );
   }
 
 }

@@ -14,7 +14,7 @@ class _CartPage extends State<CartPage>{
   Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(
-      title: const Text("Cart "),
+      title: const Center(child: Text("Cart ")),
     ),
   );
   }

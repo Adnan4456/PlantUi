@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:plant_ui/constants.dart';
 import 'package:plant_ui/presentation/create_page.dart';
-import 'package:plant_ui/presentation/login_screen.dart';
+import 'package:plant_ui/presentation/root_page.dart';
 
 class OnBoardingScreen extends StatefulWidget{
 
@@ -22,7 +22,7 @@ class _OnBoardingScreen extends State<OnBoardingScreen>{
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: _buildAppbar(),
-      body: _buildBody(_pageController ,currentIndex),
+      body: _buildBody(),
     );
   }
 
@@ -35,7 +35,7 @@ class _OnBoardingScreen extends State<OnBoardingScreen>{
           padding: const EdgeInsets.only(right: 20, top: 20),
           child: InkWell(
             onTap: (){
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=> const LoginScreen()));
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=> const RootPage()));
             },
             child:  const Text("Skip",
               style: TextStyle(
@@ -49,7 +49,7 @@ class _OnBoardingScreen extends State<OnBoardingScreen>{
       ],
     );
   }
-  Widget _buildBody(PageController pageController, int currentIndex){
+  Widget _buildBody(){
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
@@ -59,15 +59,15 @@ class _OnBoardingScreen extends State<OnBoardingScreen>{
               currentIndex = page;
             });
           },
-          controller: pageController,
+          controller: _pageController,
           children: [
-            CreatePage(image: "assets/images/image_1.png",
+            CreatePage(image: "assets/images/plant-one.png",
                 title: Constants.titleOne,
                 description: Constants.descriptionOne),
-            CreatePage(image: "assets/images/image_2.png",
+            CreatePage(image: "assets/images/plant-two.png",
                 title: Constants.titleTwo,
                 description: Constants.descriptionTwo),
-            CreatePage(image: "assets/images/image_3.png",
+            CreatePage(image: "assets/images/plant-three.png",
                 title: Constants.titleThree,
                 description: Constants.descriptionThree)
           ],
@@ -95,15 +95,20 @@ class _OnBoardingScreen extends State<OnBoardingScreen>{
                           if(currentIndex < 2){
                             currentIndex ++;
                             if(currentIndex < 3){
-                              _pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+                              _pageController.nextPage(
+                                  duration: const Duration(milliseconds: 200),
+                                  curve: Curves.easeIn);
                             }
                           }else
                           {
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=> const LoginScreen()));
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=> const RootPage()));
                           }
                         });
                       },
-                      icon: const Icon(Icons.arrow_forward_ios , size : 24 , color: Colors.white,),
+                      icon: const Icon(
+                        Icons.arrow_forward_ios,
+                        size : 24,
+                        color: Colors.white,)
               ),
             )
         )
