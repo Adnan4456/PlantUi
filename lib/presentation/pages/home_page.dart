@@ -1,6 +1,6 @@
 
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget{
 
@@ -11,9 +11,13 @@ class HomePage extends StatefulWidget{
 
 }
 class _HomePage extends State<HomePage>{
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Center(child: Text("Home ")),
+      ),
+    );
   }
-
 }

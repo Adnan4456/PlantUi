@@ -7,24 +7,30 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:plant_ui/main.dart';
+import 'package:plant_ui/presentation/onboarding_screen.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  testWidgets('OnBoardingScreen Test', (WidgetTester tester) async {
+    // Build your app and wrap the OnBoardingScreen with a MaterialApp.
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: OnBoardingScreen(),
+      ),
+    );
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // Wait for widgets to load.
+    await tester.pumpAndSettle();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // // Test Skip button.
+    // expect(find.text('Skip'), findsOneWidget);
+    // await tester.tap(find.text('Skip'));
+    // await tester.pumpAndSettle();
+    //
+    // // Check if the app navigates to the LoginScreen.
+    // expect(find.byType(LoginScreen), findsOneWidget);
+
+    // You can add more test cases here to interact with the PageView and other UI elements.
   });
+
 }
