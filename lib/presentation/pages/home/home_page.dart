@@ -1,11 +1,14 @@
 
 
+import 'package:estado/state/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:plant_ui/constants.dart';
+import 'package:plant_ui/factory/plant_factory.dart';
 import 'package:plant_ui/presentation/pages/detail_page.dart';
+import 'package:plant_ui/presentation/pages/home/view_model.dart';
 
-import '../../model/plants.dart';
+import '../../../model/plants.dart';
 
 class HomePage extends StatefulWidget{
 
@@ -15,14 +18,31 @@ class HomePage extends StatefulWidget{
   createState()=> _HomePage();
 
 }
-class _HomePage extends State<HomePage>{
+class _HomePage extends State<HomePage>
+    with ViewModelObserver
+    implements StateObserver {
 
+  List<Plant> plantList = [];
+  final PlantViewModel _viewModel = PlantViewModel(
+    PlantFactory().getRepository(),
+  );
 
+  @override
+  void initState() {
+    super.initState();
+    _viewModel.subscribe(this);
+    _viewModel.loadPlants();
+  }
+
+  @override
+  void deactivate() {
+    super.deactivate();
+    _viewModel.unsubscribe(this);
+  }
   @override
   Widget build(BuildContext context) {
     int selectedIndex = 0;
     Size size = MediaQuery.of(context).size;
-    List<Plant> plantList = Plant.plantList;
 
     //Plants category
     List<String> plantTypes = [
@@ -139,12 +159,11 @@ class _HomePage extends State<HomePage>{
                                 child: IconButton(
                                   onPressed: (){
                                     setState(() {
-                                      bool isFavorited = toggleIsFavorated(plantList[index].isFavorated);
-                                      plantList[index].isFavorated = isFavorited;
+                                      // bool isFavorited = toggleIsFavorated(plantList[index].isFavorated);
+                                      // plantList[index].isFavorated = isFavorited;
                                     });
                                   },
-                                  icon: Icon(plantList[index].isFavorated == true ?
-                                  Icons.favorite : Icons.favorite_border , color: Constants.primaryColor),
+                                  icon: const Icon(Icons.favorite),
                                   iconSize: 30,
                                 ),
                               )
@@ -154,7 +173,7 @@ class _HomePage extends State<HomePage>{
                               right: 50,
                               top: 50,
                               bottom: 50,
-                              child: Image.asset(plantList[index].imageURL),
+                              child: Image.asset(plantList[index].default_image.original_url),
                           ),
                           Positioned(
                               left: 20,
@@ -162,14 +181,14 @@ class _HomePage extends State<HomePage>{
                               child:Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(plantList[index].category,
+                                  Text(plantList[index].scientific_name.first,
                                     style:const TextStyle(
                                       color: Colors.white70,
                                       fontSize: 16,
                                     ),
                                   ),
 
-                                  Text(plantList[index].plantName,
+                                  Text(plantList[index].common_name,
                                     style:const TextStyle(
                                       color: Colors.white70,
                                       fontSize: 15,
@@ -188,7 +207,7 @@ class _HomePage extends State<HomePage>{
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(20),
                                 ),
-                                child: Text(r'$'+ plantList[index].price.toString(),
+                                child: Text(r'$'+ plantList[index].cycle,
                                 style: TextStyle(
                                   color: Constants.primaryColor,
                                   fontSize: 16
@@ -209,7 +228,6 @@ class _HomePage extends State<HomePage>{
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18.0,
-
                 ),
               ),
             ),
@@ -254,7 +272,7 @@ class _HomePage extends State<HomePage>{
 
                                   child: SizedBox(
                                     height: 80.0,
-                                    child: Image.asset(plantList[index].imageURL),
+                                    child: Image.asset(plantList[index].default_image.original_url),
                                   ),
                               ),
                               Positioned(
@@ -263,8 +281,8 @@ class _HomePage extends State<HomePage>{
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(plantList[index].category),
-                                      Text(plantList[index].plantName,
+                                      Text(plantList[index].scientific_name.first),
+                                      Text(plantList[index].common_name,
                                       style: TextStyle(
                                         fontSize:18,
                                         fontWeight: FontWeight.bold,
@@ -278,7 +296,7 @@ class _HomePage extends State<HomePage>{
                           ),
                           Container(
                             padding: const EdgeInsets.only(right: 10),
-                            child: Text(r'$' + plantList[index].price.toString(),
+                            child: Text(r'$' + plantList[index].cycle,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18.0,
@@ -295,5 +313,18 @@ class _HomePage extends State<HomePage>{
         ),
       ),
     );
+  }
+
+  @override
+  Map<String, Function> getHandleStateFunctions() {
+    return {
+
+      PlantListstate.tag: (state){
+        setState(() {
+          plantList  = state.plantsList;
+          print(plantList.toString());
+        });
+      }
+    };
   }
 }
