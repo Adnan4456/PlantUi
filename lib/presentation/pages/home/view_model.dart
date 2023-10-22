@@ -5,7 +5,8 @@ import 'package:estado/state/viewmodel.dart';
 import 'package:estado/state/utils/LoadingState.dart';
 
 import 'package:plant_ui/domain/plant_repository.dart';
-import 'package:plant_ui/model/plants.dart';
+
+import '../../../model/plants.dart';
 
 class PlantViewModel extends ViewModel {
 

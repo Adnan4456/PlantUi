@@ -5,5 +5,5 @@ abstract class PlantRepository{
 
   Future<List<Plant>> getPlants();
 
-  Future<Plant> getDetails(int id);
+  Future<Plants> getDetails(int id);
 }
