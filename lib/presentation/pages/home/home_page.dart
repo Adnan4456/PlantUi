@@ -27,6 +27,8 @@ class _HomePage extends State<HomePage>
   bool _isLoading = true;
 
   List<Plant> plantList = [];
+  List<Plant> filterList = [];
+
   final PlantViewModel _viewModel = PlantViewModel(
     PlantFactory().getRepository(),
   );
@@ -86,10 +88,14 @@ class _HomePage extends State<HomePage>
                       children: [
                         Icon(Icons.search , color: Colors.black54.withOpacity(.6),
                         ),
-                        const Expanded(
+                         Expanded(
                             child: TextField(
+                              // controller: TextEditingController(),
+                              onChanged: (query){
+                                _searchPlant(query);
+                              },
                               showCursor: false,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 hintText: "Search Plant",
                                 border: InputBorder.none,
                                 focusedBorder: InputBorder.none
@@ -136,7 +142,8 @@ class _HomePage extends State<HomePage>
             SizedBox(
               height: size.height * .3,
               child: ListView.builder(
-                itemCount: plantList.length,
+                // itemCount: plantList.length,
+                itemCount: filterList.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder:(BuildContext context , int index){
                   return GestureDetector(
@@ -162,7 +169,7 @@ class _HomePage extends State<HomePage>
                                 borderRadius: BorderRadius.circular(8.0),
                                 child: CachedNetworkImage(
                                   key: UniqueKey(),
-                                  imageUrl: plantList[index].defaultImage.originalUrl,
+                                  imageUrl: filterList[index].defaultImage.originalUrl,
                                   width: double.infinity,
                                   fit: BoxFit.cover,
                                   placeholder: (context, url) => const SizedBox(
@@ -209,7 +216,7 @@ class _HomePage extends State<HomePage>
                               child:Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(plantList[index].scientificName.first,
+                                  Text(filterList[index].scientificName.first,
                                     style:const TextStyle(
                                       color: Colors.black,
                                       fontSize: 18,
@@ -236,7 +243,7 @@ class _HomePage extends State<HomePage>
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(20),
                                 ),
-                                child: Text(r'$'+ plantList[index].price.toString(),
+                                child: Text(r'$'+ filterList[index].price.toString(),
                                 style: TextStyle(
                                   color: Constants.primaryColor,
                                   fontSize: 16
@@ -362,7 +369,22 @@ class _HomePage extends State<HomePage>
     );
   }
 
-
+  void  _searchPlant(String query){
+    List<Plant> result = [];
+    if(query.isEmpty){
+      //
+      result = plantList;
+    }else
+    {
+      result = plantList.where((plant) => plant.commonName.toLowerCase().startsWith(query)).toList();
+      if(result.isEmpty){
+        result = plantList.where((plant) => plant.scientificName.first.toLowerCase().startsWith(query)).toList();
+      }
+    }
+    setState(() {
+      filterList = result;
+    });
+  }
   @override
   Map<String, Function> getHandleStateFunctions() {
     return {
@@ -374,6 +396,7 @@ class _HomePage extends State<HomePage>
       PlantListstate.tag: (state){
         setState(() {
           plantList  = state.plantsList;
+          filterList = state.plantsList;
         });
       }
     };
