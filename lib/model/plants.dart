@@ -1,179 +1,131 @@
-class Plant {
-  final int plantId;
-  final int price;
-  final String size;
-  final double rating;
-  final int humidity;
-  final String temperature;
-  final String category;
-  final String plantName;
-  final String imageURL;
-  bool isFavorated;
-  final String decription;
-  bool isSelected;
+import 'dart:math';
 
-  Plant(
-      {required this.plantId,
-        required this.price,
-        required this.category,
-        required this.plantName,
-        required this.size,
-        required this.rating,
-        required this.humidity,
-        required this.temperature,
-        required this.imageURL,
-        required this.isFavorated,
-        required this.decription,
-        required this.isSelected});
+class Plants {
+  List<Plant> data;
+  int to;
+  int perPage;
+  int currentPage;
+  int from;
+  int lastPage;
+  int total;
 
-  //List of Plants data
-  static List<Plant> plantList = [
-    Plant(
-        plantId: 0,
-        price: 22,
-        category: 'Indoor',
-        plantName: 'Sanseviera',
-        size: 'Small',
-        rating: 4.5,
-        humidity: 34,
-        temperature: '23 - 34',
-        imageURL: 'assets/images/plant-one.png',
-        isFavorated: true,
-        decription:
-        'This plant is one of the best plant. It grows in most of the regions in the world and can survive'
-            'even the harshest weather condition.',
-        isSelected: false),
-    Plant(
-        plantId: 1,
-        price: 11,
-        category: 'Outdoor',
-        plantName: 'Philodendron',
-        size: 'Medium',
-        rating: 4.8,
-        humidity: 56,
-        temperature: '19 - 22',
-        imageURL: 'assets/images/plant-two.png',
-        isFavorated: false,
-        decription:
-        'This plant is one of the best plant. It grows in most of the regions in the world and can survive'
-            'even the harshest weather condition.',
-        isSelected: false),
-    Plant(
-        plantId: 2,
-        price: 18,
-        category: 'Indoor',
-        plantName: 'Beach Daisy',
-        size: 'Large',
-        rating: 4.7,
-        humidity: 34,
-        temperature: '22 - 25',
-        imageURL: 'assets/images/plant-three.png',
-        isFavorated: false,
-        decription:
-        'This plant is one of the best plant. It grows in most of the regions in the world and can survive'
-            'even the harshest weather condition.',
-        isSelected: false),
-    Plant(
-        plantId: 3,
-        price: 30,
-        category: 'Outdoor',
-        plantName: 'Big Bluestem',
-        size: 'Small',
-        rating: 4.5,
-        humidity: 35,
-        temperature: '23 - 28',
-        imageURL: 'assets/images/plant-one.png',
-        isFavorated: false,
-        decription:
-        'This plant is one of the best plant. It grows in most of the regions in the world and can survive'
-            'even the harshest weather condition.',
-        isSelected: false),
-    Plant(
-        plantId: 4,
-        price: 24,
-        category: 'Recommended',
-        plantName: 'Big Bluestem',
-        size: 'Large',
-        rating: 4.1,
-        humidity: 66,
-        temperature: '12 - 16',
-        imageURL: 'assets/images/plant-four.png',
-        isFavorated: true,
-        decription:
-        'This plant is one of the best plant. It grows in most of the regions in the world and can survive'
-            'even the harshest weather condition.',
-        isSelected: false),
-    Plant(
-        plantId: 5,
-        price: 24,
-        category: 'Outdoor',
-        plantName: 'Meadow Sage',
-        size: 'Medium',
-        rating: 4.4,
-        humidity: 36,
-        temperature: '15 - 18',
-        imageURL: 'assets/images/plant-five.png',
-        isFavorated: false,
-        decription:
-        'This plant is one of the best plant. It grows in most of the regions in the world and can survive'
-            'even the harshest weather condition.',
-        isSelected: false),
-    Plant(
-        plantId: 6,
-        price: 19,
-        category: 'Garden',
-        plantName: 'Plumbago',
-        size: 'Small',
-        rating: 4.2,
-        humidity: 46,
-        temperature: '23 - 26',
-        imageURL: 'assets/images/plant-six.png',
-        isFavorated: false,
-        decription:
-        'This plant is one of the best plant. It grows in most of the regions in the world and can survive'
-            'even the harshest weather condition.',
-        isSelected: false),
-    Plant(
-        plantId: 7,
-        price: 23,
-        category: 'Garden',
-        plantName: 'Tritonia',
-        size: 'Medium',
-        rating: 4.5,
-        humidity: 34,
-        temperature: '21 - 24',
-        imageURL: 'assets/images/plant-seven.png',
-        isFavorated: false,
-        decription:
-        'This plant is one of the best plant. It grows in most of the regions in the world and can survive'
-            'even the harshest weather condition.',
-        isSelected: false),
-    Plant(
-        plantId: 8,
-        price: 46,
-        category: 'Recommended',
-        plantName: 'Tritonia',
-        size: 'Medium',
-        rating: 4.7,
-        humidity: 46,
-        temperature: '21 - 25',
-        imageURL: 'assets/images/plant-eight.png',
-        isFavorated: false,
-        decription:
-        'This plant is one of the best plant. It grows in most of the regions in the world and can survive'
-            'even the harshest weather condition.',
-        isSelected: false),
-  ];
 
-  //Get the favorated items
-  static List<Plant> getFavoritedPlants(){
-    List<Plant> travelList = Plant.plantList;
-    return travelList.where((element) => element.isFavorated == true).toList();
+  Plants({
+    required this.data,
+    required this.to,
+    required this.perPage,
+    required this.currentPage,
+    required this.from,
+    required this.lastPage,
+    required this.total,
+  });
+
+  factory Plants.fromJson(Map<String, dynamic> json) {
+    List<dynamic> jsonData = json['data'];
+    print("json data length in fromJson function = ${jsonData.length}");
+    List<Plant> plants = jsonData.map((plant) => Plant.fromJson(plant)).toList();
+
+    return Plants(
+      data: plants,
+      to: json['to'],
+      perPage: json['per_page'],
+      currentPage: json['current_page'],
+      from: json['from'],
+      lastPage: json['last_page'],
+      total: json['total'],
+    );
   }
+}
 
-  //Get the cart items
-  static List<Plant> addedToCartPlants(){
-    List<Plant> selectedPlants = Plant.plantList;
-    return selectedPlants.where((element) => element.isSelected == true).toList();
+class Plant {
+  int id;
+  String price;
+  String commonName;
+  List<String> scientificName;
+  List<String>? otherName;
+  String cycle;
+  String watering;
+  List<String> sunlight;
+  DefaultImage defaultImage;
+
+  Plant({
+    required this.id,
+    required this.price,
+    required this.commonName,
+    required this.scientificName,
+    this.otherName,
+    required this.cycle,
+    required this.watering,
+    required this.sunlight,
+    required this.defaultImage,
+  });
+
+  factory Plant.fromJson(Map<String, dynamic> json) {
+    List<String> otherNameList = json['other_name'] != null
+        ? List<String>.from(json['other_name'])
+        : <String>[];
+
+    return Plant(
+      price: "2",
+        id: json['id'],
+        commonName: json['common_name'],
+        scientificName: List<String>.from(json['scientific_name']),
+        otherName: otherNameList,
+        cycle: json['cycle'],
+        watering: json['watering'],
+        sunlight: List<String>.from(json['sunlight']),
+        // defaultImage: DefaultImage.fromJson(json['default_image']),
+        defaultImage: json['default_image'] != null ? DefaultImage.fromJson(json['default_image'])
+            : DefaultImage(originalUrl: "assets/images/plant-one.png")
+    );
+  }
+}
+
+
+class DefaultImage {
+
+  // int imageId;
+  // int license;
+  // String licenseName;
+  // String licenseUrl;
+  String originalUrl;
+
+  // String regularUrl;
+  // String mediumUrl;
+  // String smallUrl;
+  // String thumbnail;
+
+  DefaultImage({
+    // required this.imageId,
+    // required this.license,
+    // required this.licenseName,
+    // required this.licenseUrl,
+    required this.originalUrl,
+
+    // required this.regularUrl,
+    // required this.mediumUrl,
+    // required this.smallUrl,
+    // required this.thumbnail,
+  });
+
+
+  factory DefaultImage.fromJson(Map<String, dynamic> json) {
+
+    return DefaultImage(
+      // imageId: json['image_id'] ?? counter,
+      // licenseName: json['license_name'] ?? '',
+      // licenseUrl: json['license_url'] ?? '',
+      originalUrl: json['original_url'] ?? '',
+      // regularUrl: json['regular_url'] ?? '',
+      // mediumUrl: json['medium_url'] ?? '',
+      // smallUrl: json['small_url'] ?? '',
+      // thumbnail: json['thumbnail'] ?? '';
+
+    );
+    }
+  static int randomNumber(){
+     Random random = Random();
+    return  10 + random.nextInt(50 -  10 + 1);
+
   }
 }

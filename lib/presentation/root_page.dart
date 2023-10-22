@@ -7,7 +7,7 @@ import 'package:plant_ui/constants.dart';
 import 'package:plant_ui/presentation/login_screen.dart';
 import 'package:plant_ui/presentation/pages/cart_page.dart';
 import 'package:plant_ui/presentation/pages/favorite_page.dart';
-import 'package:plant_ui/presentation/pages/home_page.dart';
+import 'package:plant_ui/presentation/pages/home/home_page.dart';
 import 'package:plant_ui/presentation/pages/profile_page.dart';
 
 class RootPage extends StatefulWidget{
