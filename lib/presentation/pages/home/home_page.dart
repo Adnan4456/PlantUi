@@ -7,10 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:plant_ui/constants.dart';
 import 'package:plant_ui/factory/plant_factory.dart';
-import 'package:plant_ui/presentation/pages/detail_page.dart';
+import 'package:plant_ui/model/plants.dart';
+import 'package:plant_ui/presentation/pages/detail/detail_page.dart';
 import 'package:plant_ui/presentation/pages/home/view_model.dart';
 
-import '../../../model/plants.dart';
+// import '../../../model/plants.dart';
+import '../../../routes.dart';
 
 class HomePage extends StatefulWidget{
 
@@ -90,7 +92,6 @@ class _HomePage extends State<HomePage>
                         ),
                          Expanded(
                             child: TextField(
-                              // controller: TextEditingController(),
                               onChanged: (query){
                                 _searchPlant(query);
                               },
@@ -148,7 +149,13 @@ class _HomePage extends State<HomePage>
                   itemBuilder:(BuildContext context , int index){
                   return GestureDetector(
                     onTap: (){
-                      Navigator.push(context,PageTransition(child: const DetailPage(), type: PageTransitionType.bottomToTop));
+                      // Navigator.push(context,PageTransition(
+                      //     child: const DetailPage(),
+                      //     type: PageTransitionType.bottomToTop),
+                      // );
+                      print(filterList[index].scientificName);
+                      Navigator.pushNamed(context, NavigationRoutes.detail,
+                          arguments:DetailPageArguments(filterList[index]));
                     },
                     child: Container(
                       width: 200,
@@ -276,7 +283,10 @@ class _HomePage extends State<HomePage>
                   itemBuilder: (BuildContext context , int index){
                   return GestureDetector(
                     onTap: (){
-                      Navigator.push(context,PageTransition(child: const DetailPage(), type: PageTransitionType.bottomToTop));
+                      // Navigator.push(context,PageTransition(child: const DetailPage(), type: PageTransitionType.bottomToTop));
+                      print(filterList[index].scientificName);
+                      Navigator.pushNamed(context, "/DetailPage",
+                          arguments:DetailPageArguments(filterList[index]));
                     },
                     child: Container(
                       height: 80.0,

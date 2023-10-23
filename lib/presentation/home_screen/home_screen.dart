@@ -16,7 +16,6 @@ class _HomeScreen extends State<HomeScreen>{
 
     return Scaffold(
       appBar: _buildAppBar(),
-
     );
   }
 
