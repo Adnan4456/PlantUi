@@ -58,7 +58,6 @@ class _HomePage extends State<HomePage>
   Widget build(BuildContext context) {
     int selectedIndex = 0;
     Size size = MediaQuery.of(context).size;
-
     //Plants category
     List<String> plantTypes = [
       'Recommended',
@@ -67,12 +66,6 @@ class _HomePage extends State<HomePage>
       'Garden',
       'Supplement',
     ];
-
-    //Toggle Favorite button
-    // bool toggleIsFavorated(bool isFavorited) {
-    //   return !isFavorited;
-    // }
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -130,7 +123,6 @@ class _HomePage extends State<HomePage>
               ),
             ),
             const SizedBox(height: 10,),
-
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               height: 50.0,
@@ -305,7 +297,6 @@ class _HomePage extends State<HomePage>
                 ),
               ),
             ),
-
             const SizedBox(height: 10,),
             Container(
               padding: const EdgeInsets.only(left: 16 , bottom: 20 , top: 20),
