@@ -3,21 +3,20 @@
 import 'package:flutter/material.dart';
 import 'package:plant_ui/constants.dart';
 import 'package:plant_ui/model/plants.dart';
+import 'package:plant_ui/presentation/pages/detail/image_pages.dart';
 
 import '../../../model/detail.dart';
-import 'image_pages.dart';
+import 'detail_page.dart';
 
+class Test extends StatefulWidget{
 
-class DetailPage extends StatefulWidget{
-
-  const DetailPage({super.key });
+  const Test({super.key});
 
   @override
-  createState() => _DetailPage();
-
+  createState() => _Test();
 }
-class _DetailPage extends State<DetailPage>{
 
+class _Test extends State<Test>{
   late Plant plant;
   final PageController _pageController = PageController();
   double currentIndex = 0;
@@ -73,7 +72,7 @@ class _DetailPage extends State<DetailPage>{
       child: Row(
         children: [
           Expanded(
-            flex: 2,
+              flex: 2,
             child: _buildImagePager(),
           ),
           Expanded(
@@ -87,59 +86,59 @@ class _DetailPage extends State<DetailPage>{
     return  Expanded(
       child: Container(
         padding: const EdgeInsets.only(left: 20,top: 30 ,right: 20),
-        decoration: BoxDecoration(
-            color: Constants.primaryColor.withOpacity(.5),
-            borderRadius: const BorderRadius.only(
-                topRight: Radius.circular(30),
-                topLeft: Radius.circular(30)
-            )
-        ),
+      decoration: BoxDecoration(
+        color: Constants.primaryColor.withOpacity(.5),
+        borderRadius: const BorderRadius.only(
+          topRight: Radius.circular(30),
+          topLeft: Radius.circular(30)
+        )
+      ),
         child:  Column(
           // mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(plant.commonName ,
-              style: TextStyle(
-                  color: Constants.primaryColor.withOpacity(.9),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24
-              ),),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(r'$'+ products[plant.id].price.toString(),
-                  style: const TextStyle(
-                      color: Colors.black54,
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold
-                  ),
-                ),
-                const SizedBox(height: 10,),
-                Row(
-                  children: [
-                    Text(products[plant.id].rating.toString(),
-                      style: TextStyle(
-                          color: Constants.primaryColor,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold
-                      ),),
-                    Icon(Icons.star,color: Constants.primaryColor,)
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(height: 20,),
-            Expanded(
-                child:Text(products[plant.id].description,
-                  textAlign: TextAlign.justify,
-                  style: TextStyle(
-                      height: 1.5,
-                      fontSize: 18,
-                      color: Constants.blackColor.withOpacity(.7)
-                  ),
-                )
-            ),
-          ],
+         children: [
+           Text(plant.commonName ,
+           style: TextStyle(
+             color: Constants.primaryColor.withOpacity(.9),
+             fontWeight: FontWeight.bold,
+             fontSize: 24
+           ),),
+           Row(
+             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+             children: [
+               Text(r'$'+ products[plant.id].price.toString(),
+               style: const TextStyle(
+                   color: Colors.black54,
+                   fontSize: 22,
+                   fontWeight: FontWeight.bold
+               ),
+               ),
+               const SizedBox(height: 10,),
+               Row(
+                 children: [
+                   Text(products[plant.id].rating.toString(),
+                     style: TextStyle(
+                         color: Constants.primaryColor,
+                         fontSize: 22,
+                         fontWeight: FontWeight.bold
+                     ),),
+                   Icon(Icons.star,color: Constants.primaryColor,)
+                 ],
+               ),
+             ],
+           ),
+           const SizedBox(height: 20,),
+           Expanded(
+               child:Text(products[plant.id].description,
+               textAlign: TextAlign.justify,
+               style: TextStyle(
+                 height: 1.5,
+                 fontSize: 18,
+                 color: Constants.blackColor.withOpacity(.7)
+               ),
+               )
+           ),
+         ], 
         ),
       ),
     );
@@ -185,9 +184,7 @@ class _DetailPage extends State<DetailPage>{
             color: Constants.primaryColor.withOpacity(.15)
         ),
         child:
-        IconButton(onPressed: (){
-          Navigator.pop(context);
-        },
+        IconButton(onPressed: (){},
             icon: Icon(icon, color: Constants.primaryColor,)
         ),
       ),
@@ -279,35 +276,4 @@ class _DetailPage extends State<DetailPage>{
     Product(12.99, 3.3, "An entry-level product that offers great value for the price. "
         "A budget-friendly choice for beginners."),
   ];
-}
-
-class PlantFeature extends StatelessWidget {
-
-  final String  feature;
-  final String title;
-
-   const PlantFeature({
-    super.key, required this.feature, required this.title
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(title,
-        style: TextStyle(
-          color: Constants.blackColor,
-
-        ),
-        ),
-        Text(feature,
-        style: TextStyle(
-          color: Constants.primaryColor,
-          fontSize: 18.0,
-          fontWeight: FontWeight.bold
-        ),),
-      ],
-    );
-  }
 }

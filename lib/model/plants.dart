@@ -76,7 +76,7 @@ class Plant {
         sunlight: List<String>.from(json['sunlight']),
         // defaultImage: DefaultImage.fromJson(json['default_image']),
         defaultImage: json['default_image'] != null ? DefaultImage.fromJson(json['default_image'])
-            : DefaultImage(originalUrl: "assets/images/plant-one.png")
+            : DefaultImage(originalUrl: "assets/images/plant-one.png",regularUrl: "assets/images/plant-one.png")
     );
   }
 }
@@ -89,8 +89,7 @@ class DefaultImage {
   // String licenseName;
   // String licenseUrl;
   String originalUrl;
-
-  // String regularUrl;
+  String regularUrl;
   // String mediumUrl;
   // String smallUrl;
   // String thumbnail;
@@ -101,8 +100,7 @@ class DefaultImage {
     // required this.licenseName,
     // required this.licenseUrl,
     required this.originalUrl,
-
-    // required this.regularUrl,
+    required this.regularUrl,
     // required this.mediumUrl,
     // required this.smallUrl,
     // required this.thumbnail,
@@ -116,7 +114,7 @@ class DefaultImage {
       // licenseName: json['license_name'] ?? '',
       // licenseUrl: json['license_url'] ?? '',
       originalUrl: json['original_url'] ?? '',
-      // regularUrl: json['regular_url'] ?? '',
+      regularUrl: json['regular_url'] ?? '',
       // mediumUrl: json['medium_url'] ?? '',
       // smallUrl: json['small_url'] ?? '',
       // thumbnail: json['thumbnail'] ?? '';
