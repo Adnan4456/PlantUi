@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:plant_ui/presentation/signup/signup_screen.dart';
 
 import '../../constants.dart';
 import '../forget_password/forget_password_screen.dart';
@@ -48,7 +49,7 @@ class _LoginScreen extends State<LoginScreen>{
           const SizedBox(
             height: 10,
           ),
-          _buildSingInButton(),
+          _buildSignInButton(),
           const SizedBox(
             height: 10,
           ),
@@ -64,8 +65,10 @@ class _LoginScreen extends State<LoginScreen>{
               Expanded(child: Divider()),
             ],
           ),
-          const SizedBox(height: 20,),
-          _buildGoogleButton()
+          const SizedBox(height: 10,),
+          _buildGoogleButton(),
+          const SizedBox(height: 10,),
+          _buildSignUpText()
         ],
       ),
     );
@@ -74,7 +77,7 @@ class _LoginScreen extends State<LoginScreen>{
     return Image.asset("assets/images/signin.png");
   }
   Widget _buildText(){
-    return const Text("Sing In",
+    return const Text("Sign In",
       style: TextStyle(
           fontSize: 30.0,
           fontWeight: FontWeight.w700
@@ -151,7 +154,7 @@ class _LoginScreen extends State<LoginScreen>{
       ),
     );
   }
-  Widget _buildSingInButton(){
+  Widget _buildSignInButton(){
     Size size  = MediaQuery.of(context).size;
     return   GestureDetector(
       onTap: () {
@@ -238,5 +241,33 @@ class _LoginScreen extends State<LoginScreen>{
       ),
     );
   }
-
+  Widget _buildSignUpText(){
+    return    GestureDetector(
+      onTap: () {
+        Navigator.pushReplacement(
+            context,
+            PageTransition(
+                child: const SignUpScreen(),
+                type: PageTransitionType.bottomToTop));
+      },
+      child: Center(
+        child: Text.rich(
+          TextSpan(children: [
+            TextSpan(
+              text: 'New User? ',
+              style: TextStyle(
+                color: Constants.blackColor,
+              ),
+            ),
+            TextSpan(
+              text: 'Create account Here',
+              style: TextStyle(
+                color: Constants.primaryColor,
+              ),
+            ),
+          ]),
+        ),
+      ),
+    );
+  }
 }
