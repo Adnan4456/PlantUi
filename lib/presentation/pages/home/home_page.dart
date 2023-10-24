@@ -26,6 +26,8 @@ class _HomePage extends State<HomePage>
     implements StateObserver {
 
   bool _isLoading = true;
+  ScrollController _controller = ScrollController();
+  bool closeTopContainer = false;
 
   List<Plant> plantList = [];
   List<Plant> filterList = [];
@@ -37,8 +39,14 @@ class _HomePage extends State<HomePage>
   @override
   void initState() {
     super.initState();
+
     _viewModel.subscribe(this);
     _viewModel.loadPlants();
+    _controller.addListener(() {
+      setState(() {
+        closeTopContainer = _controller.offset > 50;
+      });
+    });
   }
 
   @override
@@ -83,13 +91,20 @@ class _HomePage extends State<HomePage>
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     width: size.width * .9,
                     decoration: BoxDecoration(
-                      color: Constants.primaryColor.withOpacity(.1),
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Constants.primaryColor,
+                          blurRadius: 8.0,
+                          offset: const Offset(0, 0)
+                        ),
+                      ]
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.search , color: Colors.black54.withOpacity(.6),
+                        Icon(Icons.search , color: Colors.grey,
                         ),
                          Expanded(
                             child: TextField(
@@ -97,6 +112,7 @@ class _HomePage extends State<HomePage>
                                 _searchPlant(query);
                               },
                               showCursor: false,
+                              cursorColor: Constants.primaryColor,
                               decoration: const InputDecoration(
                                 hintText: "Search Plant",
                                 border: InputBorder.none,
@@ -106,7 +122,7 @@ class _HomePage extends State<HomePage>
                         ),
                         Icon(
                           Icons.mic ,
-                          color:  Colors.black54.withOpacity(.6),
+                          color:  Colors.grey,
                         ),
                       ],
                     ),
@@ -114,6 +130,8 @@ class _HomePage extends State<HomePage>
                 ],
               ),
             ),
+            SizedBox(height: 10,),
+
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               height: 50.0,
@@ -127,146 +145,170 @@ class _HomePage extends State<HomePage>
                         onTap: (){
                           setState(() {
                             selectedIndex = index;
+                            print(selectedIndex);
                           });
+                          print("click");
                         },
-                        child: Text(
-                          plantTypes[index],
-                          style:TextStyle(
-                            fontSize: 16.0,
-                            fontWeight: selectedIndex == index ? FontWeight.bold: FontWeight.w300,
-                            color: selectedIndex == index ? Constants.primaryColor : Constants.blackColor
+                        child:
+                        Container(
+                          padding: const EdgeInsets.all(5.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Constants.primaryColor,
+                              width: 1.0
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Text(
+                            plantTypes[index],
+                            style:TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: selectedIndex == index ? FontWeight.bold: FontWeight.w300,
+                              color: selectedIndex == index ? Constants.primaryColor : Constants.blackColor
+                            ),
                           ),
                         ),
                       ),
                     );
                   }),
             ),
-            SizedBox(
-              height: size.height * .3,
-              child: ListView.builder(
-                // itemCount: plantList.length,
-                itemCount: filterList.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder:(BuildContext context , int index){
-                  return GestureDetector(
-                    onTap: (){
-                      // Navigator.push(context,PageTransition(
-                      //     child: const DetailPage(),
-                      //     type: PageTransitionType.bottomToTop),
-                      // );
-                      print(filterList[index].scientificName);
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder:(context) => const DetailPage(),
-                            settings: RouteSettings(
-                              arguments: filterList[index]
-                            )
-                          )
-                      );
-                    },
-                    child: Container(
-                      width: 200,
-                      margin:const EdgeInsets.symmetric(horizontal: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.black12,
-                        borderRadius: BorderRadius.circular(20)
-                      ),
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            left: 0,
-                              right: 0,
-                              top: 0,
-                              bottom: 40,
-                              child:
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(8.0),
-                                child: CachedNetworkImage(
-                                  key: UniqueKey(),
-                                  imageUrl: filterList[index].defaultImage.originalUrl,
-                                  width: double.infinity,
-                                  fit: BoxFit.cover,
-                                  placeholder: (context, url) => const SizedBox(
-                                    height: 30,
-                                    width: 30,
-                                    child: Center(
-                                      child: CircularProgressIndicator(
-                                        color: Colors.white,
+
+            AnimatedOpacity(
+              duration: const Duration(milliseconds: 200),
+              opacity: closeTopContainer?0:1,
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 2000),
+                alignment: Alignment.center,
+                height: closeTopContainer?0: size.height * .30,
+                child: SizedBox(
+                  child: ListView.builder(
+                    itemCount: filterList.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder:(BuildContext context , int index){
+                      return GestureDetector(
+                        onTap: (){
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder:(context) => const DetailPage(),
+                                  settings: RouteSettings(
+                                  arguments: filterList[index]
+                                )
+                              )
+                          );
+                        },
+                        child: Container(
+                          width: 180,
+                          margin:const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Constants.primaryColor,
+                                  blurRadius: 5.0,
+                                )
+                              ],
+                          ),
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                left: 0,
+                                  right: 0,
+                                  top: 0,
+                                  bottom: 40,
+                                  child:
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    child: CachedNetworkImage(
+                                      key: UniqueKey(),
+                                      imageUrl: filterList[index].defaultImage.originalUrl,
+                                      width: double.infinity,
+                                      fit: BoxFit.cover,
+                                      placeholder: (context, url) => const SizedBox(
+                                        height: 30,
+                                        width: 30,
+                                        child: Center(
+                                          child: CircularProgressIndicator(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                      errorWidget: (context, url , error)=> Container(
+                                        color: Colors.black12,
+                                        child: const Icon(Icons.error, color: Color(0xff296e48)),
                                       ),
                                     ),
                                   ),
-                                  errorWidget: (context, url , error)=> Container(
-                                    color: Colors.black12,
-                                    child: const Icon(Icons.error, color: Color(0xff296e48)),
-                                  ),
-                                ),
                               ),
-                          ),
-                          Positioned(
-                              top: 5,
-                              right: 5,
-                              child: Container(
-                                height: 50,
-                                width: 50,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                child: IconButton(
-                                  onPressed: (){
-                                    setState(() {
-                                      // bool isFavorited = toggleIsFavorated(plantList[index].isFavorated);
-                                      // plantList[index].isFavorated = isFavorited;
-                                    });
-                                  },
-                                  icon:  Icon(Icons.favorite_border , color: Constants.primaryColor,),
-                                  iconSize: 30,
-                                ),
-                              )
-                          ),
-                          Positioned(
-                              left: 20,
-                              bottom: 10,
-                              right: 70,
-                              child:Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(filterList[index].commonName,
-                                    // textAlign: TextAlign.justify,
+                              Positioned(
+                                  top: 5,
+                                  right: 5,
+                                  child: Container(
+                                    height: 50,
+                                    width: 50,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    child: IconButton(
+                                      onPressed: (){
+                                        setState(() {
+                                          // bool isFavorited = toggleIsFavorated(plantList[index].isFavorated);
+                                          // plantList[index].isFavorated = isFavorited;
+                                        });
+                                      },
+                                      icon:  Icon(Icons.favorite_border , color: Constants.primaryColor,),
+                                      iconSize: 30,
+                                    ),
+                                  )
+                              ),
+                              Positioned(
+                                  left: 20,
+                                  bottom: 10,
+                                  right: 70,
+                                  child:Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(filterList[index].commonName,
+                                        // textAlign: TextAlign.justify,
+                                        style: TextStyle(
+                                          color: Constants.primaryColor,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                              ),
+                              Positioned(
+                                  bottom: 5,
+                                  right: 10,
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10 , vertical: 2),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Text(r'$'+ products[index].price.toString(),
                                     style: TextStyle(
                                       color: Constants.primaryColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.normal
+                                      fontSize: 16
+                                    ),
                                     ),
                                   ),
-                                ],
-                              )
-                          ),
-                          Positioned(
-                              bottom: 5,
-                              right: 10,
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 10 , vertical: 2),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Text(r'$'+ products[index].price.toString(),
-                                style: TextStyle(
-                                  color: Constants.primaryColor,
-                                  fontSize: 16
-                                ),
-                                ),
                               ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
-                  );
-                  }
+                        ),
+                      );
+                      }
+                  ),
+                ),
               ),
             ),
+
+            SizedBox(height: 10,),
             Container(
               padding: const EdgeInsets.only(left: 16 , bottom: 20 , top: 20),
               child: const Text("New Plants" ,
@@ -280,15 +322,13 @@ class _HomePage extends State<HomePage>
               padding: const EdgeInsets.symmetric(horizontal: 12),
               height: size.height * .5,
               child: ListView.builder(
+                controller: _controller,
                 itemCount: plantList.length,
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (BuildContext context , int index){
                   return GestureDetector(
                     onTap: (){
-                      // Navigator.push(context,PageTransition(child: const DetailPage(), type: PageTransitionType.bottomToTop));
                       print(filterList[index].scientificName);
-                      // Navigator.pushNamed(context, "/DetailPage",
-                      //     arguments:DetailPageArguments(filterList[index]));
                       Navigator.push(
                           context,
                           MaterialPageRoute(
