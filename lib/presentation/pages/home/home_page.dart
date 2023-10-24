@@ -26,7 +26,7 @@ class _HomePage extends State<HomePage>
     implements StateObserver {
 
   bool _isLoading = true;
-  ScrollController _controller = ScrollController();
+  final ScrollController _controller = ScrollController();
   bool closeTopContainer = false;
 
   List<Plant> plantList = [];
@@ -96,15 +96,14 @@ class _HomePage extends State<HomePage>
                       boxShadow: [
                         BoxShadow(
                           color: Constants.primaryColor,
-                          blurRadius: 8.0,
-                          offset: const Offset(0, 0)
+                          blurRadius: 8.0
                         ),
                       ]
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.search , color: Colors.grey,
+                        const Icon(Icons.search , color: Colors.grey,
                         ),
                          Expanded(
                             child: TextField(
@@ -120,7 +119,7 @@ class _HomePage extends State<HomePage>
                               ),
                             )
                         ),
-                        Icon(
+                        const Icon(
                           Icons.mic ,
                           color:  Colors.grey,
                         ),
@@ -130,7 +129,7 @@ class _HomePage extends State<HomePage>
                 ],
               ),
             ),
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
 
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -154,8 +153,7 @@ class _HomePage extends State<HomePage>
                           padding: const EdgeInsets.all(5.0),
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: Constants.primaryColor,
-                              width: 1.0
+                              color: Constants.primaryColor
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -202,7 +200,7 @@ class _HomePage extends State<HomePage>
                           margin:const EdgeInsets.all(5),
                           decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            borderRadius: const BorderRadius.all(Radius.circular(20)),
                               boxShadow: [
                                 BoxShadow(
                                   color: Constants.primaryColor,
@@ -308,7 +306,7 @@ class _HomePage extends State<HomePage>
               ),
             ),
 
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             Container(
               padding: const EdgeInsets.only(left: 16 , bottom: 20 , top: 20),
               child: const Text("New Plants" ,
