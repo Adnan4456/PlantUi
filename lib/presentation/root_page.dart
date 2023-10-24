@@ -4,7 +4,8 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:plant_ui/constants.dart';
-import 'package:plant_ui/presentation/login_screen.dart';
+import 'package:plant_ui/presentation/login/login_screen.dart';
+
 import 'package:plant_ui/presentation/pages/cart_page.dart';
 import 'package:plant_ui/presentation/pages/favorite_page.dart';
 import 'package:plant_ui/presentation/pages/home/home_page.dart';
