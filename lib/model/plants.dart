@@ -22,7 +22,7 @@ class Plants {
 
   factory Plants.fromJson(Map<String, dynamic> json) {
     List<dynamic> jsonData = json['data'];
-    print("json data length in fromJson function = ${jsonData.length}");
+    // print("json data length in fromJson function = ${jsonData.length}");
     List<Plant> plants = jsonData.map((plant) => Plant.fromJson(plant)).toList();
 
     return Plants(

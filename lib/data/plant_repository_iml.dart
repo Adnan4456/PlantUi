@@ -18,10 +18,10 @@ class PlantRepositoryImpl  extends PlantRepository{
     // TODO: implement getDetails
     throw UnimplementedError();
   }
-  List<Plants> parsePlantsList(String json) {
-    final parsed = jsonDecode(json);
-    return List<Plants>.from(parsed['data'].map((plant) => Plants.fromJson(plant)));
-  }
+  // List<Plants> parsePlantsList(String json) {
+  //   final parsed = jsonDecode(json);
+  //   return List<Plants>.from(parsed['data'].map((plant) => Plants.fromJson(plant)));
+  // }
 
 
   @override
@@ -29,10 +29,8 @@ class PlantRepositoryImpl  extends PlantRepository{
     var response = await _networkClient.get();
     print(response.body);
     if (response.statusCode == 200) {
-      var jsonResponse = jsonDecode(response.body); // Assuming you have your JSON as a string
+      var jsonResponse = jsonDecode(response.body); //  you have your JSON as a string
       final plantResponse = Plants.fromJson(jsonResponse);
-      // List<Plant> plants = plantResponse.data;
-      // print(plants);
       return plantResponse.data;
     }else {
       throw Exception("Failed to load personas");
