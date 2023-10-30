@@ -1,8 +1,9 @@
 
 
 import 'package:estado/state/state.dart';
+import 'package:estado/state/utils/loading_state.dart';
 import 'package:estado/state/viewmodel.dart';
-import 'package:estado/state/utils/LoadingState.dart';
+
 
 import 'package:plant_ui/domain/plant_repository.dart';
 
@@ -14,7 +15,7 @@ class PlantViewModel extends ViewModel {
 
   PlantViewModel(this._repository);
 
-  void loadPlants() async{
+  Future  loadPlants() async {
     notify(LoadingState(true));
     var result = await _repository.getPlants();
     notify(LoadingState(false));

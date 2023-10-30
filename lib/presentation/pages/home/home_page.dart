@@ -2,7 +2,8 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:estado/state/observer.dart';
-import 'package:estado/state/utils/LoadingState.dart';
+import 'package:estado/state/utils/loading_state.dart';
+
 import 'package:flutter/material.dart';
 import 'package:plant_ui/constants.dart';
 import 'package:plant_ui/factory/plant_factory.dart';
@@ -10,7 +11,6 @@ import 'package:plant_ui/model/plants.dart';
 import 'package:plant_ui/presentation/pages/detail/detail_page.dart';
 import 'package:plant_ui/presentation/pages/home/view_model.dart';
 
-// import '../../../model/plants.dart';
 import '../../../model/detail.dart';
 
 class HomePage extends StatefulWidget{
@@ -54,6 +54,7 @@ class _HomePage extends State<HomePage>
     super.deactivate();
     _viewModel.unsubscribe(this);
   }
+
   @override
   Widget build(BuildContext context) {
     int selectedIndex = 0;

@@ -80,8 +80,6 @@ class Plant {
     );
   }
 }
-
-
 class DefaultImage {
 
   // int imageId;
