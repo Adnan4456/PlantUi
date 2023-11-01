@@ -30,14 +30,14 @@ jobs:
 #        run: |
 #            flutter pub get
 #            flutter pub run build_runner build
-#      - name: Generate Lint Report
-#        run: flutter analyze > lint-report.html
+      - name: Generate Lint Report
+        run: flutter analyze > lint-report.html
 
-#      - name: Upload Lint Report as Artifact
-#        uses: actions/upload-artifact@v2
-#        with:
-#          - name: lint-report
-#            path: lint-report.html
+      - name: Upload Lint Report as Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          - name: lint-report
+            path: lint-report.html
 
       - name: Run tests
         run: flutter test
