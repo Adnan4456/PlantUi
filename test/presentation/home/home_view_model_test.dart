@@ -10,7 +10,6 @@ import 'package:plant_ui/presentation/pages/home/view_model.dart';
 
 import 'home_view_model_test.mocks.dart';
 
-
 @GenerateMocks([PlantRepository , EventObserver])
 void main(){
 
