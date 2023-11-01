@@ -53,6 +53,7 @@ jobs:
           path: test-report.html
 
   apk:
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -68,7 +69,7 @@ jobs:
 #        run: flutter build ios
 
       - name: upload artifacts
-        uses: actions/upload-artifact@v
+        uses: actions/upload-artifact@v2
         with:
           name: artifacts
           path: |
