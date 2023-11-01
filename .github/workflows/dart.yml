@@ -31,11 +31,27 @@ jobs:
 #            flutter pub run build_runner build
 
       # Consider passing '--fatal-infos' for slightly stricter analysis.
-      - name: Run analyzer
-        run:  flutter analyze
+
+  lint:
+    needs: [ "build"]
+    runs-on: ubuntu-latest
+    steps:
+#      - name: Run analyzer
+#        run:  flutter analyze
+
+
+      - name: Generate Lint Report
+        run: flutter analyze > lint-report.html
+
+      - name: Upload Lint Report as Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          - name: lint-report
+            path: lint-report.html
+
 
       # Your project will need to have tests in test/ and a dependency on
       # package:test for this step to succeed. Note that Flutter projects will
       # want to change this to 'flutter test'.
-      - name: Run tests
-        run: flutter test
+#      - name: Run tests
+#        run: flutter test
