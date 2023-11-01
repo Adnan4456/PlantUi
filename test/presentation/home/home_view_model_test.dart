@@ -1,7 +1,6 @@
 
 
 import 'package:estado/state/observer.dart';
-import 'package:estado/state/utils/loading_state.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -11,18 +10,19 @@ import 'package:plant_ui/presentation/pages/home/view_model.dart';
 
 import 'home_view_model_test.mocks.dart';
 
-@GenerateMocks([PlantRepository , StateObserver])
+
+@GenerateMocks([PlantRepository , EventObserver])
 void main(){
 
   late PlantRepository repo;
   late PlantViewModel subject;
   late List<Plant> plantList;
-  late StateObserver observer;
+  late EventObserver observer;
 
   setUp(() {
     repo =  MockPlantRepository();
     subject = PlantViewModel(repo);
-    observer = MockStateObserver();
+    observer = MockEventObserver();
     plantList = [];
   });
 
@@ -38,6 +38,7 @@ void main(){
     
     verify(repo.getPlants()).called(1);
     expect(plantList.length, 0);
+
   });
 
   test("Check we are getting correct data from repository", () async {
@@ -55,8 +56,8 @@ void main(){
     expect(plantList.length, 0);
 
     verifyInOrder([
-      observer.notify(LoadingState(true)),
-      observer.notify(LoadingState(false)),
+      observer.notify(LoadingEvent(isLoading: true)),
+      observer.notify(LoadingEvent(isLoading:false)),
       observer.notify(PlantListstate(plantList))
     ]);
   });
