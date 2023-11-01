@@ -38,7 +38,8 @@ jobs:
     steps:
 #      - name: Run analyzer
 #        run:  flutter analyze
-
+      - name: checkout code
+        uses:  actions/checkout@v3
 
       - name: Generate Lint Report
         run: flutter analyze > lint-report.html
