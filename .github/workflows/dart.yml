@@ -14,23 +14,30 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
       - run: flutter --version
+      - name : Run analyze
+        run: flutter analyze
       # Uncomment this step to verify the use of 'dart format' on each commit.
 #      - name: Verify formatting
 #        run: dart format --output=none --set-exit-if-changed .
 
-      # Consider passing '--fatal-infos' for slightly stricter analysis.
-      - name: Run analyzer
-        run: flutter analyze
+#      - name: Get dependencies and generate mocks
+#        run: |
+#            flutter pub get
+#            flutter pub run build_runner build
+      - name: Generate Lint Report
+        run: flutter analyze > lint-report.html
 
-      # Your project will need to have tests in test/ and a dependency on
-      # package:test for this step to succeed. Note that Flutter projects will
-      # want to change this to 'flutter test'.
+      - name: Upload Lint Report as Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: lint-report
+          path: lint-report.html
+
       - name: Run tests
         run: flutter test

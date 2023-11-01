@@ -2,7 +2,8 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:estado/state/observer.dart';
-import 'package:estado/state/utils/LoadingState.dart';
+import 'package:estado/state/state.dart';
+
 import 'package:flutter/material.dart';
 import 'package:plant_ui/constants.dart';
 import 'package:plant_ui/factory/plant_factory.dart';
@@ -10,7 +11,6 @@ import 'package:plant_ui/model/plants.dart';
 import 'package:plant_ui/presentation/pages/detail/detail_page.dart';
 import 'package:plant_ui/presentation/pages/home/view_model.dart';
 
-// import '../../../model/plants.dart';
 import '../../../model/detail.dart';
 
 class HomePage extends StatefulWidget{
@@ -22,8 +22,7 @@ class HomePage extends StatefulWidget{
 
 }
 class _HomePage extends State<HomePage>
-    with ViewModelObserver
-    implements StateObserver {
+implements EventObserver {
 
   bool _isLoading = true;
   final ScrollController _controller = ScrollController();
@@ -54,6 +53,7 @@ class _HomePage extends State<HomePage>
     super.deactivate();
     _viewModel.unsubscribe(this);
   }
+
   @override
   Widget build(BuildContext context) {
     int selectedIndex = 0;
@@ -435,22 +435,22 @@ class _HomePage extends State<HomePage>
       filterList = result;
     });
   }
-  @override
-  Map<String, Function> getHandleStateFunctions() {
-    return {
-      LoadingState.name : (state){
-        setState(() {
-          _isLoading = state.isLoading;
-        });
-      },
-      PlantListstate.tag: (state){
-        setState(() {
-          plantList  = state.plantsList;
-          filterList = state.plantsList;
-        });
-      }
-    };
-  }
+  // @override
+  // Map<String, Function> getHandleStateFunctions() {
+  //   return {
+  //     LoadingEvent.name : (state){
+  //       setState(() {
+  //         _isLoading = state.isLoading;
+  //       });
+  //     },
+  //     PlantListstate.tag: (state){
+  //       setState(() {
+  //         plantList  = state.plantsList;
+  //         filterList = state.plantsList;
+  //       });
+  //     }
+  //   };
+  // }
   List<Product> products = [
     Product(29.99, 4.5, "High-quality product with exceptional features. "
         "Perfect for home or office use. Available in multiple colors."),
@@ -495,4 +495,29 @@ class _HomePage extends State<HomePage>
     Product(12.99, 3.3, "An entry-level product that offers great value for the price. "
         "A budget-friendly choice for beginners."),
   ];
+
+  @override
+  void cleanUp() {
+
+  }
+
+  @override
+  void notify(ViewEvent? event) {
+
+    if (event is LoadingEvent) {
+      setState(() {
+        _isLoading = event.isLoading;
+      });
+    } else if (event is PlantListstate) {
+      setState(() {
+        plantList = event.plantsList;
+      });
+    }
+  }
+
+  @override
+  Map<String, Function> getHandleStateFunctions() {
+    // TODO: implement getHandleStateFunctions
+    throw UnimplementedError();
+  }
 }
