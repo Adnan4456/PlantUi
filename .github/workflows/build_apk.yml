@@ -1,0 +1,23 @@
+
+
+name: Android Build
+
+on:
+  push:
+    branches: [ "master" ]
+    pull_request:
+      branches: [ "master" ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '2.8.0'  # Use your required Flutter version
+
+      - name: Build APK
+        run: flutter build apk --release
