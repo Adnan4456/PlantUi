@@ -39,5 +39,15 @@ jobs:
           name: lint-report
           path: lint-report.html
 
+
       - name: Run tests
         run: flutter test
+
+      - name: Generate test report
+        run: flutter test > test-report.html
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-report
+          path: test-report.html
