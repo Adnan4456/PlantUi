@@ -16,4 +16,6 @@ jobs:
       - run: flutter --version
 
       - name: Build APK
-        run: flutter build apk --release
+        run: |
+          flutter pub get  # Ensure to fetch dependencies
+          flutter build apk --release --verbose  # Run build with verbose output
