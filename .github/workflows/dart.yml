@@ -14,7 +14,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
@@ -38,27 +37,5 @@ jobs:
           - name: lint-report
             path: lint-report.html
 
-#  lint:
-#    needs: [ "build"]
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Run analyzer
-#        run:  flutter analyze
-#      - name: checkout code
-#        uses:  actions/checkout@v3
-#
-#      - name: Generate Lint Report
-#        run: flutter analyze > lint-report.html
-#
-#      - name: Upload Lint Report as Artifact
-#        uses: actions/upload-artifact@v2
-#        with:
-#          - name: lint-report
-#            path: lint-report.html
-
-
-      # Your project will need to have tests in test/ and a dependency on
-      # package:test for this step to succeed. Note that Flutter projects will
-      # want to change this to 'flutter test'.
-#      - name: Run tests
-#        run: flutter test
+      - name: Run tests
+        run: flutter test
