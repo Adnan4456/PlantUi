@@ -9,7 +9,6 @@ class Plants {
   int lastPage;
   int total;
 
-
   Plants({
     required this.data,
     required this.to,
