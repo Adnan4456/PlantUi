@@ -92,7 +92,7 @@ class _OnBoardingScreen extends State<OnBoardingScreen>{
                 color: Constants.primaryColor,
               ),
               child: IconButton(
-                key: Key("Next"),
+                key: const Key("Next"),
                       onPressed: () {
                         setState(() {
                           if(currentIndex < 2){

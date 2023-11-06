@@ -71,7 +71,7 @@ void main() {
     expect(find.text(Constants.titleTwo),findsNothing);
 
     //Now perform the click on button
-    await tester.tap(find.byKey(Key("Next")));
+    await tester.tap(find.byKey(const Key("Next")));
     // Wait for the UI to rebuild after the tap action
     await tester.pumpAndSettle();
 
