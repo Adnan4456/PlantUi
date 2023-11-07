@@ -21,7 +21,6 @@ class Plants {
 
   factory Plants.fromJson(Map<String, dynamic> json) {
     List<dynamic> jsonData = json['data'];
-    // print("json data length in fromJson function = ${jsonData.length}");
     List<Plant> plants = jsonData.map((plant) => Plant.fromJson(plant)).toList();
 
     return Plants(
@@ -73,7 +72,6 @@ class Plant {
         cycle: json['cycle'],
         watering: json['watering'],
         sunlight: List<String>.from(json['sunlight']),
-        // defaultImage: DefaultImage.fromJson(json['default_image']),
         defaultImage: json['default_image'] != null ? DefaultImage.fromJson(json['default_image'])
             : DefaultImage(originalUrl: "assets/images/plant-one.png",regularUrl: "assets/images/plant-one.png")
     );

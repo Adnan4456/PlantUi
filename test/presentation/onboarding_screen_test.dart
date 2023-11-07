@@ -20,7 +20,6 @@ void main() {
     await tester.drag(find.byType(PageView), const Offset(-600, 0));
     await tester.pumpAndSettle();
 
-
     // Check if the second page is displayed
     expect(find.text(Constants.titleTwo), findsOneWidget);
     expect(find.text(Constants.descriptionTwo),findsOneWidget);
