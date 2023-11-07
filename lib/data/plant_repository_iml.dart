@@ -18,12 +18,6 @@ class PlantRepositoryImpl  extends PlantRepository{
     // TODO: implement getDetails
     throw UnimplementedError();
   }
-  // List<Plants> parsePlantsList(String json) {
-  //   final parsed = jsonDecode(json);
-  //   return List<Plants>.from(parsed['data'].map((plant) => Plants.fromJson(plant)));
-  // }
-
-
   @override
   Future<List<Plant>> getPlants() async {
     var response = await _networkClient.get();

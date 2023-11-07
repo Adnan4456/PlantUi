@@ -38,6 +38,7 @@ class _OnBoardingScreen extends State<OnBoardingScreen>{
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=> const RootPage()));
             },
             child:  const Text("Skip",
+              key: Key("Skip"),
               style: TextStyle(
                   color: Colors.grey,
                   fontSize: 16.0,
@@ -60,6 +61,7 @@ class _OnBoardingScreen extends State<OnBoardingScreen>{
             });
           },
           controller: _pageController,
+
           children: [
             CreatePage(image: "assets/images/plant-one.png",
                 title: Constants.titleOne,
@@ -90,6 +92,7 @@ class _OnBoardingScreen extends State<OnBoardingScreen>{
                 color: Constants.primaryColor,
               ),
               child: IconButton(
+                key: const Key("Next"),
                       onPressed: () {
                         setState(() {
                           if(currentIndex < 2){
