@@ -14,6 +14,7 @@ MVVM Architecture for managing data and UI separation
 
 # GitHub Actions
 The project is configured with GitHub Actions to automatically run static analysis and tests with each push to the repository.
+To automate the creation of lint and test HTML reports and upload them to GitHub while using Codecov for professional code coverage reports, you can configure a workflow that performs these tasks using GitHub Actions. 
 
 # Project Structure
 The project is organized using Clean Architecture, keeping a clear separation of concerns. MVVM architecture is implemented to manage the data and UI components efficiently.
