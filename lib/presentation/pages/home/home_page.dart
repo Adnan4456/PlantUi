@@ -435,22 +435,6 @@ implements EventObserver {
       filterList = result;
     });
   }
-  // @override
-  // Map<String, Function> getHandleStateFunctions() {
-  //   return {
-  //     LoadingEvent.name : (state){
-  //       setState(() {
-  //         _isLoading = state.isLoading;
-  //       });
-  //     },
-  //     PlantListstate.tag: (state){
-  //       setState(() {
-  //         plantList  = state.plantsList;
-  //         filterList = state.plantsList;
-  //       });
-  //     }
-  //   };
-  // }
   List<Product> products = [
     Product(29.99, 4.5, "High-quality product with exceptional features. "
         "Perfect for home or office use. Available in multiple colors."),
