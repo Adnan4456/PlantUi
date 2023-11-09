@@ -11,7 +11,8 @@ Navigate to a detailed page for each plant
 Flutter for cross-platform development
 Clean Architecture for better project organization
 MVVM Architecture for managing data and UI separation
-
+Codecov for code coverage report
+Mockito library for mocking dependent classes.
 # GitHub Actions
 The project is configured with GitHub Actions to automatically run static analysis and tests with each push to the repository.
 To automate the creation of lint and test HTML reports and upload them to GitHub while using Codecov for professional code coverage reports, you can configure a workflow that performs these tasks using GitHub Actions. 
