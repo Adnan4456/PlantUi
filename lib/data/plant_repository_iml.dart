@@ -1,7 +1,7 @@
 
-import 'dart:convert';
 import 'dart:math';
 import 'package:plant_ui/domain/plant_repository.dart';
+import '../constants.dart';
 import '../model/plants.dart';
 import 'network/network_client.dart';
 
@@ -15,18 +15,13 @@ class PlantRepositoryImpl  extends PlantRepository{
   Future<Plants> getDetails(int id) {
     throw UnimplementedError();
   }
+
   @override
   Future<List<Plant>> getPlants() async {
-    var response = await _networkClient.get();
-    // var response = await _networkClient.getGetApiResponse(url);
-    // print(response.body);
-    if (response.statusCode == 200) {
-      var jsonResponse = jsonDecode(response.body); //  you have your JSON as a string
-      final plantResponse = Plants.fromJson(jsonResponse);
-      return plantResponse.data;
-    }else {
-      throw Exception("Failed to load personas");
-    }
+    var response = await _networkClient.getGetApiResponse(Constants.url);
+    print(response);
+    final plantResponse = Plants.fromJson(response);
+    return plantResponse.data;
   }
 
    int randomNumber(){

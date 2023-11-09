@@ -12,11 +12,11 @@ class ApiResponse<T> {
   /// properties: `status`, `data`, and `message`.
   ApiResponse(this.status , this.data , this.message);
 
-  ApiResponse.loading() : status = Status.LOADING;
+  ApiResponse.loading() : status = Status.loading;
 
-  ApiResponse.complete(): status = Status.COMPLETED;
+  ApiResponse.complete(): status = Status.completed;
 
-  ApiResponse.error(): status = Status.ERROR;
+  ApiResponse.error(): status = Status.error;
 
   @override
   String toString() {

@@ -17,8 +17,12 @@ class HomePage extends StatefulWidget{
 
   const HomePage({super.key});
 
+
+
   @override
   createState()=> _HomePage();
+
+
 
 }
 class _HomePage extends State<HomePage>
@@ -31,6 +35,16 @@ implements EventObserver {
   List<Plant> plantList = [];
   List<Plant> filterList = [];
 
+  int selectedIndex = 0;
+
+  //Plants category
+  List<String> plantTypes = [
+    'Recommended',
+    'Indoor',
+    'Outdoor',
+    'Garden',
+    'Supplement',
+  ];
   final PlantViewModel _viewModel = PlantViewModel(
     PlantFactory().getRepository(),
   );
@@ -56,115 +70,18 @@ implements EventObserver {
 
   @override
   Widget build(BuildContext context) {
-    int selectedIndex = 0;
     Size size = MediaQuery.of(context).size;
-    //Plants category
-    List<String> plantTypes = [
-      'Recommended',
-      'Indoor',
-      'Outdoor',
-      'Garden',
-      'Supplement',
-    ];
     return Scaffold(
-      body: SingleChildScrollView(
+      body: SafeArea(
         child: Column(
           crossAxisAlignment : CrossAxisAlignment.start,
           children: [
-            Container(
-              padding: const EdgeInsets.only(top: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _isLoading == true ?
-                     CircularProgressIndicator(
-                      color: Constants.primaryColor,
-                    ):
-                  Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    width: size.width * .9,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Constants.primaryColor,
-                          blurRadius: 8.0
-                        ),
-                      ]
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.search , color: Colors.grey,
-                        ),
-                         Expanded(
-                            child: TextField(
-                              onChanged: (query){
-                                _searchPlant(query);
-                              },
-                              showCursor: false,
-                              cursorColor: Constants.primaryColor,
-                              decoration: const InputDecoration(
-                                hintText: "Search Plant",
-                                border: InputBorder.none,
-                                focusedBorder: InputBorder.none
-                              ),
-                            )
-                        ),
-                        const Icon(
-                          Icons.mic ,
-                          color:  Colors.grey,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+             _buildHeader(size),
             const SizedBox(height: 10,),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              height: 50.0,
-              width: size.width,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: plantTypes.length,
-                  itemBuilder: (BuildContext context , int index){
-                    return Padding(padding: const EdgeInsets.all(8.0),
-                      child: GestureDetector(
-                        onTap: (){
-                          setState(() {
-                            selectedIndex = index;
-                            print(selectedIndex);
-                          });
-                          print("click");
-                        },
-                        child:
-                        Container(
-                          padding: const EdgeInsets.all(5.0),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Constants.primaryColor
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Text(
-                            plantTypes[index],
-                            style:TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: selectedIndex == index ? FontWeight.bold: FontWeight.w300,
-                              color: selectedIndex == index ? Constants.primaryColor : Constants.blackColor
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  }),
-            ),
+            _buildCenterList(size),
 
             AnimatedOpacity(
-              duration: const Duration(milliseconds: 200),
+              duration: const Duration(milliseconds: 300),
               opacity: closeTopContainer?0:1,
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 2000),
@@ -299,7 +216,7 @@ implements EventObserver {
             ),
             const SizedBox(height: 10,),
             Container(
-              padding: const EdgeInsets.only(left: 16 , bottom: 20 , top: 20),
+              padding: const EdgeInsets.only(left: 16 , bottom: 20 , top: 10),
               child: const Text("New Plants" ,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -417,6 +334,104 @@ implements EventObserver {
         ),
       ),
     );
+  }
+
+  Widget _buildHeader(Size size){
+
+    return Container(
+      padding: const EdgeInsets.only(top: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          _isLoading == true ?
+          CircularProgressIndicator(
+            color: Constants.primaryColor,
+          ):
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            width: size.width * .9,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                      color: Constants.primaryColor,
+                      blurRadius: 8.0
+                  ),
+                ]
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.search , color: Colors.grey,
+                ),
+                Expanded(
+                    child: TextField(
+                      onChanged: (query){
+                        _searchPlant(query);
+                      },
+                      showCursor: false,
+                      cursorColor: Constants.primaryColor,
+                      decoration: const InputDecoration(
+                          hintText: "Search Plant",
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none
+                      ),
+                    )
+                ),
+                const Icon(
+                  Icons.mic ,
+                  color:  Colors.grey,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+  Widget _buildCenterList(Size size){
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      height: 50.0,
+      width: size.width,
+      child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: plantTypes.length,
+          itemBuilder: (BuildContext context , int index){
+            return Padding(padding: const EdgeInsets.all(8.0),
+              child: GestureDetector(
+                onTap: (){
+                  setState(() {
+                    selectedIndex = index;
+                    print(selectedIndex);
+                  });
+                },
+                child:
+                Container(
+                  padding: const EdgeInsets.all(5.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                        color: Constants.primaryColor
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Text(
+                    plantTypes[index],
+                    style:TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: selectedIndex == index ? FontWeight.bold: FontWeight.w300,
+                        color: selectedIndex == index ? Constants.primaryColor : Constants.blackColor
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }),
+    );
+  }
+  Widget _buildNewPantText(){
+
   }
 
   void  _searchPlant(String query){
