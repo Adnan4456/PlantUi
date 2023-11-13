@@ -55,7 +55,13 @@ jobs:
       - name: Run code coverage test
         run: flutter test --coverage
 
+      - name: Debug - Print Coverage Reports After Upload
+        run: |
+          ls -l $GITHUB_WORKSPACE/path/to/your/coverage/
+          cat $GITHUB_WORKSPACE/path/to/your/coverage/lcov.info
+
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
