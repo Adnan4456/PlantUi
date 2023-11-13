@@ -70,20 +70,24 @@ jobs:
 
       - name: Check code coverage threshold
         run: |
-            COVERAGE_THRESHOLD=80  # Set your desired coverage threshold
-            CURRENT_COVERAGE=$(lcov -l coverage/lcov.info | awk '/lines/ {print $2}' | cut -d'%' -f1)
-            
-            if [ -z "$CURRENT_COVERAGE" ]; then
-              echo "Error: No coverage information found. Workflow failed!"
-              exit 1
-            fi
-        
-            if [ "$CURRENT_COVERAGE" -lt "$COVERAGE_THRESHOLD" ]; then
-              echo "Code coverage is below $COVERAGE_THRESHOLD%. Workflow failed!"
-              exit 1
-            else
-              echo "Code coverage is above $COVERAGE_THRESHOLD%. Workflow passed!"
-            fi
+          COVERAGE_THRESHOLD=80  # Set your desired coverage threshold
+          LCOV_OUTPUT=$(lcov -l coverage/lcov.info)
+          echo "Debug: lcov output:"
+          echo "$LCOV_OUTPUT"
+          
+          CURRENT_COVERAGE=$(echo "$LCOV_OUTPUT" | awk '/lines/ {print $2}' | cut -d'%' -f1)
+          
+          if [ -z "$CURRENT_COVERAGE" ]; then
+            echo "Error: No coverage information found. Workflow failed!"
+            exit 1
+          fi
+          
+          if [ "$CURRENT_COVERAGE" -lt "$COVERAGE_THRESHOLD" ]; then
+            echo "Code coverage is below $COVERAGE_THRESHOLD%. Workflow failed!"
+            exit 1
+          else
+            echo "Code coverage is above $COVERAGE_THRESHOLD%. Workflow passed!"
+          fi
       
 
       - name: Upload HTML Test coverage report as artifact
