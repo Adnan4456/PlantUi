@@ -55,11 +55,16 @@ jobs:
       - name: Run code coverage test
         run: flutter test --coverage
 
-      - name: Debug - Print Coverage Reports After Upload
-        run: |
-          ls -l $GITHUB_WORKSPACE/coverage/
-          cat $GITHUB_WORKSPACE/coverage/lcov.info
+#      - name: Debug - Print Coverage Reports After Upload
+#        run: |
+#          ls -l $GITHUB_WORKSPACE/coverage/
+#          cat $GITHUB_WORKSPACE/coverage/lcov.info
           
+      - name: Install lcov2html
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lcov
+          npm install -g lcov2html
 
       - name: Generate HTML coverage report
         run: |
