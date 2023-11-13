@@ -40,14 +40,11 @@ class NetworkClient extends BaseApiService{
 
     try
     {
-      // final response  = await http.get(Uri.parse(url))
         final response  = await post(
           Uri.parse(url),
           body:  data
         ).timeout(const Duration(seconds: 10));
       responseJson = returnResponse(response);
-
-
 
     }on SocketException{
       throw FetchDataException("Error in communication");

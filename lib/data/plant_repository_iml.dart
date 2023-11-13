@@ -1,5 +1,4 @@
 
-import 'dart:math';
 import 'package:plant_ui/domain/plant_repository.dart';
 import '../constants.dart';
 import '../model/plants.dart';
@@ -19,14 +18,12 @@ class PlantRepositoryImpl  extends PlantRepository{
   @override
   Future<List<Plant>> getPlants() async {
     var response = await _networkClient.getGetApiResponse(Constants.url);
-    print(response);
     final plantResponse = Plants.fromJson(response);
     return plantResponse.data;
   }
 
-   int randomNumber(){
-    Random random = Random();
-    return  10 + random.nextInt(50 -  10 + 1);
-
-  }
+  //  int randomNumber(){
+  //   Random random = Random();
+  //   return  10 + random.nextInt(50 -  10 + 1);
+  // }
 }
