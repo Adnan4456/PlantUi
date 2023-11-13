@@ -68,11 +68,11 @@ jobs:
             lcov --list coverage/lcov.info  # Display coverage information (optional, for debugging)
             genhtml -o coverage/html coverage/lcov.info   
 
-      - name: Upload HTML coverage report as artifact
+      - name: Upload HTML Test coverage report as artifact
         uses: actions/upload-artifact@v2
         with:
-          name: html-coverage
-          path: coverage/html
+          name: test-coverage
+          path: test-coverage.html
 
 #      - name: Generate HTML coverage report
 #        run: |
