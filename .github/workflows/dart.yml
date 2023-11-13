@@ -60,8 +60,14 @@ jobs:
           ls -l $GITHUB_WORKSPACE/coverage/
           cat $GITHUB_WORKSPACE/coverage/lcov.info
 
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v3
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - name: Upload coverage to codecov
+        run: curl -s https://codecov.io/bash
+        shell: bash
+
+
+
+#      - name: Upload coverage reports to Codecov
+#        uses: codecov/codecov-action@v3
+#        env:
+#          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
