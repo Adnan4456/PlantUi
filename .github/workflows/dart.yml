@@ -63,6 +63,12 @@ jobs:
       - name: Install lcov (for genhtml)
         run: sudo apt-get install lcov
 
+      - name: Generate HTML coverage report
+          run: |
+            lcov --list coverage/lcov.info  # Display coverage information (optional, for debugging)
+            genhtml -o coverage/html coverage/lcov.info   
+
+
 
 #      - name: Generate HTML coverage report
 #        run: |
