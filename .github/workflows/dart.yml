@@ -72,7 +72,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: test-coverage
-          path: test-coverage.html
+          path: coverage/html
 
 #      - name: Generate HTML coverage report
 #        run: |
