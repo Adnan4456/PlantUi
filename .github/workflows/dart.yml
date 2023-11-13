@@ -65,13 +65,13 @@ jobs:
 
       - name: Generate HTML coverage report
         run: |
-            lcov --list coverage/lcov.info  # Display coverage information (optional, for debugging)
+            lcov --list coverage/lcov.info  # Display coverage information 
             genhtml -o coverage/html coverage/lcov.info   
       
 
       - name: Check code coverage threshold
         run: |
-          COVERAGE_THRESHOLD=80  # Set your desired coverage threshold
+          COVERAGE_THRESHOLD=80  # 80 percentage coverage threshold
           CURRENT_COVERAGE=$(lcov -l coverage/lcov.info | awk '/lines/ {print $2}' | cut -d'%' -f1)
           
           if [ $CURRENT_COVERAGE -lt $COVERAGE_THRESHOLD ]; then
