@@ -75,7 +75,7 @@ jobs:
           echo "Debug: lcov output:"
           echo "$LCOV_OUTPUT"
           
-          CURRENT_COVERAGE=$(echo "$LCOV_OUTPUT" | awk '/Total:/ {print $2}' | cut -d'%' -f1)
+          CURRENT_COVERAGE=$(echo "$LCOV_OUTPUT" | awk -F'|' '/Total:/ {print $2}' | tr -d '%' | tr -d ' ' )
           
           if [ -z "$CURRENT_COVERAGE" ]; then
             echo "Error: No coverage information found. Workflow failed!"
