@@ -59,10 +59,22 @@ jobs:
         run: |
           ls -l $GITHUB_WORKSPACE/coverage/
           cat $GITHUB_WORKSPACE/coverage/lcov.info
+          
 
-      - name: Upload coverage to codecov
-        run: curl -s https://codecov.io/bash
-        shell: bash
+      - name: Generate HTML coverage report
+        run: |
+          flutter test --coverage
+          lcov2html -o coverage/index.html coverage/lcov.info
+
+      - name: Upload HTML coverage report as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: html-coverage
+          path: coverage/index.html
+
+#      - name: Upload coverage to codecov
+#        run: curl -s https://codecov.io/bash
+#        shell: bash
 
 
 
