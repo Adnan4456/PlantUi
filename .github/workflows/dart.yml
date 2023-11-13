@@ -75,14 +75,14 @@ jobs:
           echo "Debug: lcov output:"
           echo "$LCOV_OUTPUT"
           
-          CURRENT_COVERAGE=$(echo "$LCOV_OUTPUT" | awk '/lines/ {print $2}' | cut -d'%' -f1)
+          CURRENT_COVERAGE=$(echo "$LCOV_OUTPUT" | awk '/Total:/ {print $2}' | cut -d'%' -f1)
           
           if [ -z "$CURRENT_COVERAGE" ]; then
             echo "Error: No coverage information found. Workflow failed!"
             exit 1
           fi
           
-          if [ "$CURRENT_COVERAGE" -lt "$COVERAGE_THRESHOLD" ]; then
+          if (( $(echo "$CURRENT_COVERAGE < $COVERAGE_THRESHOLD" | bc -l) )); then
             echo "Code coverage is below $COVERAGE_THRESHOLD%. Workflow failed!"
             exit 1
           else
