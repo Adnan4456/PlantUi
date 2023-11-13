@@ -52,7 +52,47 @@ jobs:
           name: test-report
           path: test-report.html
 
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v3
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run code coverage test
+        run: flutter test --coverage
+
+#      - name: Debug - Print Coverage Reports After Upload
+#        run: |
+#          ls -l $GITHUB_WORKSPACE/coverage/
+#          cat $GITHUB_WORKSPACE/coverage/lcov.info
+          
+      - name: Install lcov (for genhtml)
+        run: sudo apt-get install lcov
+
+      - name: Generate HTML coverage report
+        run: |
+            lcov --list coverage/lcov.info  # Display coverage information (optional, for debugging)
+            genhtml -o coverage/html coverage/lcov.info   
+
+      - name: Upload HTML Test coverage report as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-coverage
+          path: coverage/html
+
+#      - name: Generate HTML coverage report
+#        run: |
+#          flutter test --coverage
+#          lcov2html -o coverage/index.html coverage/lcov.info
+#
+#      - name: Upload HTML coverage report as artifact
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: html-coverage
+#          path: coverage/index.html
+
+#      - name: Upload coverage to codecov
+#        run: curl -s https://codecov.io/bash
+#        shell: bash
+
+
+
+#      - name: Upload coverage reports to Codecov
+#        uses: codecov/codecov-action@v3
+#        env:
+#          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+

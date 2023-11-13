@@ -4,12 +4,14 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:plant_ui/constants.dart';
+import 'package:plant_ui/factory/plant_factory.dart';
 import 'package:plant_ui/presentation/login/login_screen.dart';
-
 import 'package:plant_ui/presentation/pages/cart_page.dart';
 import 'package:plant_ui/presentation/pages/favorite_page.dart';
 import 'package:plant_ui/presentation/pages/home/home_page.dart';
+import 'package:plant_ui/presentation/pages/home/view_model.dart';
 import 'package:plant_ui/presentation/pages/profile_page.dart';
+
 
 class RootPage extends StatefulWidget{
 
@@ -21,15 +23,14 @@ class RootPage extends StatefulWidget{
 
 class _RootPage extends State<RootPage>{
 
+
+  final PlantViewModel viewModel = PlantViewModel(PlantFactory().getRepository());
+
+
   int _bottomNavIndex = 0;
 
-  //list of pages
-  List<Widget> pages = const [
-    HomePage(),
-    FavoritePage(),
-    CartPage(),
-    ProfilePage(),
-  ];
+
+
 
   //list of pages icons
   List<IconData> iconList = const [
@@ -50,7 +51,13 @@ class _RootPage extends State<RootPage>{
 
   @override
   Widget build(BuildContext context) {
-
+    //list of pages
+    // List<Widget> pages = const [
+    //   HomePage(viewModel: viewModel),
+    //   FavoritePage(),
+    //   CartPage(),
+    //   ProfilePage(),
+    // ];
     return Scaffold(
       appBar:_buildAppBar(),
       body: _buildBody(),
@@ -96,7 +103,13 @@ class _RootPage extends State<RootPage>{
   IndexedStack _buildBody(){
     return IndexedStack(
       index: _bottomNavIndex,
-      children: pages
+      // children: pages
+      children: [
+        HomePage(viewModel: viewModel),
+        const FavoritePage(),
+        const CartPage(),
+        const ProfilePage(),
+      ],
     );
   }
 

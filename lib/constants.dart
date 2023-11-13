@@ -14,4 +14,7 @@ class Constants {
   static var descriptionTwo = "Are you a plant lover? Connect with other plant lovers.";
   static var titleThree = "Plant a tree, green the Earth";
   static var descriptionThree = "Find almost all types of plants that you like here.";
+
+  static var url = 'https://perenual.com/api/species-list?key=sk-BuwK652a9021aa6aa2462&page=1';
+
 }
