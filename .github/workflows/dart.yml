@@ -67,6 +67,19 @@ jobs:
         run: |
             lcov --list coverage/lcov.info  # Display coverage information (optional, for debugging)
             genhtml -o coverage/html coverage/lcov.info   
+      
+
+      - name: Check code coverage threshold
+        run: |
+          COVERAGE_THRESHOLD=80  # Set your desired coverage threshold
+          CURRENT_COVERAGE=$(lcov -l coverage/lcov.info | awk '/lines/ {print $4}' | cut -d'%' -f1)
+          
+          if [ $CURRENT_COVERAGE -lt $COVERAGE_THRESHOLD ]; then
+            echo "Code coverage is below $COVERAGE_THRESHOLD%. Workflow failed!"
+            exit 1
+          else
+            echo "Code coverage is above $COVERAGE_THRESHOLD%. Workflow passed!"
+          fi    
 
       - name: Upload HTML Test coverage report as artifact
         uses: actions/upload-artifact@v2
