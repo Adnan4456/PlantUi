@@ -72,7 +72,7 @@ jobs:
       - name: Check code coverage threshold
         run: |
           COVERAGE_THRESHOLD=80  # Set your desired coverage threshold
-          CURRENT_COVERAGE=$(lcov -l coverage/lcov.info | awk '/lines/ {print $4}' | cut -d'%' -f1)
+          CURRENT_COVERAGE=$(lcov -l coverage/lcov.info | awk '/lines/ {print $2}' | cut -d'%' -f1)
           
           if [ $CURRENT_COVERAGE -lt $COVERAGE_THRESHOLD ]; then
             echo "Code coverage is below $COVERAGE_THRESHOLD%. Workflow failed!"
