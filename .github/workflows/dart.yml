@@ -65,8 +65,30 @@ jobs:
 
       - name: Generate HTML coverage report
         run: |
-            lcov --list coverage/lcov.info  # Display coverage information (optional, for debugging)
+            lcov --list coverage/lcov.info  # Display coverage information 
             genhtml -o coverage/html coverage/lcov.info   
+
+      - name: Check code coverage threshold
+        run: |
+          COVERAGE_THRESHOLD=10  # Set your desired coverage threshold
+          LCOV_OUTPUT=$(lcov -l coverage/lcov.info)
+          echo "Debug: lcov output:"
+          echo "$LCOV_OUTPUT"
+          
+          CURRENT_COVERAGE=$(echo "$LCOV_OUTPUT" | awk -F'|' '/Total:/ {print $2}' | tr -d '%' | tr -d ' ' )
+          
+          if [ -z "$CURRENT_COVERAGE" ]; then
+            echo "Error: No coverage information found. Workflow failed!"
+            exit 1
+          fi
+          
+          if (( $(echo "$CURRENT_COVERAGE < $COVERAGE_THRESHOLD" | bc -l) )); then
+            echo "Code coverage is below $COVERAGE_THRESHOLD%. Workflow failed!"
+            exit 1
+          else
+            echo "Code coverage is above $COVERAGE_THRESHOLD%. Workflow passed!"
+          fi
+      
 
       - name: Upload HTML Test coverage report as artifact
         uses: actions/upload-artifact@v2
