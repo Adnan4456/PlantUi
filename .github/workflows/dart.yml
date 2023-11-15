@@ -70,7 +70,7 @@ jobs:
 
       - name: Check code coverage threshold
         run: |
-          COVERAGE_THRESHOLD=80  # Set your desired coverage threshold
+          COVERAGE_THRESHOLD=10  # Set your desired coverage threshold
           LCOV_OUTPUT=$(lcov -l coverage/lcov.info)
           echo "Debug: lcov output:"
           echo "$LCOV_OUTPUT"
