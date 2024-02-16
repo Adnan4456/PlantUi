@@ -83,8 +83,8 @@ class _OnBoardingScreen extends State<OnBoardingScreen>{
             )
         ),
         Positioned(
-            bottom: 60,
-            right: 30,
+            bottom: 40,
+            right: 20,
             child: Container(
               padding:const EdgeInsets.all(4),
               decoration: BoxDecoration(

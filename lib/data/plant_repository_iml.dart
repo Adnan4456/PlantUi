@@ -21,9 +21,4 @@ class PlantRepositoryImpl  extends PlantRepository{
     final plantResponse = Plants.fromJson(response);
     return plantResponse.data;
   }
-
-  //  int randomNumber(){
-  //   Random random = Random();
-  //   return  10 + random.nextInt(50 -  10 + 1);
-  // }
 }
