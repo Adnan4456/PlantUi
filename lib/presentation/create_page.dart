@@ -21,9 +21,9 @@ class CreatePage extends StatelessWidget{
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 350,child: Image.asset(image),
+            SizedBox(height: 250,child: Image.asset(image),
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(height: 10,),
             Text(title,
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -32,7 +32,7 @@ class CreatePage extends StatelessWidget{
                   fontWeight: FontWeight.bold
               ),
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(height: 10,),
             Text(description,
               textAlign: TextAlign.center,
               style: const TextStyle(
